@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 export const signup = async (req, res) => {
 	try {
 		const { fullName, username, email, password } = req.body;
+		console.log("body", req.body);
 
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(email)) {
@@ -38,7 +39,6 @@ export const signup = async (req, res) => {
 		if (newUser) {
 			generateTokenAndSetCookie(newUser._id, res);
 			await newUser.save();
-
 			res.status(201).json({
 				_id: newUser._id,
 				fullName: newUser.fullName,
